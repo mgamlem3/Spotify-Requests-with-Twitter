@@ -21,6 +21,7 @@ import spotipy.util as util
 import tweepy
 from tweepy import OAuthHandler
 import time
+import re
 
 # variable to check if first run
 first = True
@@ -55,7 +56,7 @@ def addSong(search):
         # if a result was found in the database
         if (result['tracks']['items']):
             print("--- Found Result in Spotify Database ----")
-            print(result['tracks']['items'])
+            print("{}".format(result['tracks']['items']))
 
             # must be list due to bug in Spotipy library even if only searching for one song
             track_id = []
@@ -65,10 +66,10 @@ def addSong(search):
             # add item to playlist
             results = sp.user_playlist_add_tracks(username, playlist_id, track_id)
             if (results):
-                print(track_id[0] + " added successfully")
+                print("\n{} added successfully".format(track_id[0]))
                 track_id.pop()
             else:
-                print(track_id[0] + " was not added")
+                print("\n{} was not added".format(track_id[0]))
                 track_id.pop()
 
             # clear
@@ -78,12 +79,20 @@ def addSong(search):
     else:
         print("Can't get token for", username)
 
+#will parse tweet to get into proper format for search
+#will return string to search
+def tweetParse(tweetText):
+    search = re.sub('#[\w]+', '', tweetText)
+    search = search.strip()
+    output = open("Searches.txt", 'a')
+    output.write("{}\n".format(search))
+    output.close()
+    return search
 
 #### Authenticate to Spotify ####
-# scope that the program is allowed
-
 getAuthInfo()
 
+# scope that the program is allowed
 scope = 'user-library-read playlist-modify-public'
 
 # current username
@@ -147,29 +156,29 @@ while (True):
     for tweet in RESULTS:
         # display tweet
         print("\tTweet Found:")
-        print("{} {} {} {}").format(tweet.created_at, tweet.text, tweet.lang, tweet.id)
+        print("{} {} {} {} {}".format(tweet.created_at, tweet.text, tweet.lang, tweet.id, tweet.author.screen_name))
         tweetID = str(tweet.id)
 
         # check to see if Tweet has already been found
         filein = open("Tweets.txt")
-        if tweetID in filein.read():
+        if tweetID in filein.read().split():
             continue
         filein.close()
 
-        # store Tweet ID
+        # store Tweet Information
         fileout = open("Tweets.txt", 'a')
-        fileout.write(tweetID)
+        fileout.write("{} {} {} {}".format(tweet.id, tweet.author.screen_name, tweet.created_at, tweet.text))
         fileout.write("\n")
         fileout.close()
 
         # prepare tweet to be sent to Spotify
-        search = tweet.text
+        search = tweetParse(tweet.text)
 
         # drop everything after the hastag "#...."
-        search = search.split("#", 1)[0]
+        #search = search.split("#", 1)[0]
 
         # make Spotify request
-        print("Making Spotify Request for: \"{}\"").format(search)
+        print("Making Spotify Request for: \"{}\"".format(search))
         if (search != ""):
             addSong(search)
 
