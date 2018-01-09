@@ -24,6 +24,22 @@ import time
 
 # variable to check if first run
 first = True
+# stores secret information
+authInfo = [None] * 9
+# hashtag to search for
+HASHTAG = "#WhitworthSpringNShout"
+
+
+# will get secret information from file
+# will store in an array to be accessed that variables will be set from
+def getAuthInfo():
+    info = open("authentication.txt")
+    i = 0
+    while i < 9:
+        line = info.readline().split()
+        authInfo[i] = str(line[2])
+        i = i + 1
+    info.close()
 
 
 # Will add songs to Spotify Playlist
@@ -65,37 +81,43 @@ def addSong(search):
 
 #### Authenticate to Spotify ####
 # scope that the program is allowed
+
+getAuthInfo()
+
 scope = 'user-library-read playlist-modify-public'
 
 # current username
-username = 'mgamlem3'
+username = authInfo[0]
 # CS 313 Playlist
-playlist_id = '3iZ0kkNGnUWbah7jgyEMGz'
+playlist_id = authInfo[1]
 
 # authorization information for Spotify Web API
-token = util.prompt_for_user_token(username, scope, client_id='72769ea151c446b5af6db14409bce6d7',
-                                                    client_secret='10b9b03feecc4be891d8fd4b3037e34b',
-                                                    redirect_uri='http://localhost:8888/callback')
-
+token = util.prompt_for_user_token(username, scope, client_id=authInfo[2],
+                                   client_secret=authInfo[3],
+                                   redirect_uri=authInfo[4])
 ########
 
 #### Authenticate to Twitter ####
 # Authorization Keys for Twitter API
-CONSUMER_KEY = 'fmSSXCDXX7CNyRxGxnSdAO3F2'
-CONSUMER_SECRET = 'JlzpHRlLDMnbNNFdMpVqNeDEYxxPkAWWdwNKCkfz6t1iLNMWnj'
-ACCESS_TOKEN = '879480356486782976-vkRkfL1kpWSwuneodcHt97Z0qSbbLsB'
-ACESS_SECRET = 'oiVDk6znp8KiNdF6I6bP2GsfYTicde9cZBcSjzEHNCQcC'
+CONSUMER_KEY = authInfo[5]
+CONSUMER_SECRET = authInfo[6]
+ACCESS_TOKEN = authInfo[7]
+ACCESS_SECRET = authInfo[8]
 
 # Library functions for handling all of the authorizations with Twitter
 AUTH = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-AUTH.set_access_token(ACCESS_TOKEN, ACESS_SECRET)
+AUTH.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
 API = tweepy.API(AUTH)
 
 ########
 
 # This loop will continually search Twitter until a matching tweet is found
-# run this program until terminated by user
+# Run this program until terminated by user
 while (True):
+    # check for authorization info on first run
+    if (first):
+        getAuthInfo()
+
     # only ask Twitter once per minute to avoid 429 error
     if (not first):
         print("Sleeping for 1 minute...\n")
@@ -104,7 +126,7 @@ while (True):
     # ask Twitter for information
     try:
         print("Making Twitter Request...\n")
-        RESULTS = tweepy.Cursor(API.search, q='CS313Whitworth2017').items(10)
+        RESULTS = tweepy.Cursor(API.search, q=HASHTAG, show_user='true', since_id='0').items(10)
         print(RESULTS)
 
     # if 429 error, wait 15 minutes until we can request again
@@ -118,20 +140,23 @@ while (True):
         print("UNKNOWN EXCEPTION\nTERMINATING PROGRAM\n")
         break
 
+    except Exception as e:
+        print("Other Error {}").format(e)
+
     # if a tweet is found pass to Spotify
     for tweet in RESULTS:
         # display tweet
         print("\tTweet Found:")
-        print(tweet.created_at, tweet.text, tweet.lang, tweet.id)
+        print("{} {} {} {}").format(tweet.created_at, tweet.text, tweet.lang, tweet.id)
         tweetID = str(tweet.id)
 
-        #check to see if Tweet has already been found
+        # check to see if Tweet has already been found
         filein = open("Tweets.txt")
         if tweetID in filein.read():
             continue
         filein.close()
 
-        #store Tweet ID
+        # store Tweet ID
         fileout = open("Tweets.txt", 'a')
         fileout.write(tweetID)
         fileout.write("\n")
@@ -139,11 +164,12 @@ while (True):
 
         # prepare tweet to be sent to Spotify
         search = tweet.text
+
         # drop everything after the hastag "#...."
         search = search.split("#", 1)[0]
 
         # make Spotify request
-        print("Making Spotify Request for: \"" + search + "\"\n")
+        print("Making Spotify Request for: \"{}\"").format(search)
         if (search != ""):
             addSong(search)
 
