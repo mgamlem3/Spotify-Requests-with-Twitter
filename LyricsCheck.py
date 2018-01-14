@@ -8,6 +8,7 @@
 import urllib3
 import re
 
+
 # makes URL for genius.com
 def makeURL(track, artist):
     URL = "https://genius.com/"
@@ -43,10 +44,12 @@ def makeHTTPRequest(URL):
 
     return ""
 
-#parses lyrics to look for explicit content
-#returns string with true, false, or not found
+
+# parses lyrics to look for explicit content
+# returns string with true, false, or not found
 def parseResponse(artist, track, response):
-    regex = "is_explicit[\"\,\d\w\:\[]+"
+    # print(response)
+    regex = "is_explicit[\"\\,\\d\\w\\:\\[]+"
     # if response is empty, add song to list that needs to be checked by human
     if response == "":
         file = open("SongsWithNoResponse.txt", 'a')
@@ -54,12 +57,12 @@ def parseResponse(artist, track, response):
         file.close()
         return "not found"
 
-    #search for explicit flag in response
+    # search for explicit flag in response
     else:
-        found = re.match(regex, response)
-        if found != None:
-            #search for true
-            #index of location is ignored, only looking for true or false value
+        found = re.search(regex, response)
+        if found is not None:
+            # search for true
+            # index of location is ignored, only looking for true or false value
             index = found.group(0).find('true' or 'True')
             if index != -1:
                 return "true"
@@ -69,7 +72,7 @@ def parseResponse(artist, track, response):
             if index != -1:
                 return "false"
 
-        #regular expression was not matched
+        # regular expression was not matched
         else:
             file = open("SongsWithNoResponse.txt", 'a')
             file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(track, artist))

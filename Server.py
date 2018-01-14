@@ -56,20 +56,20 @@ def addSong(search):
 
         # if a result was found in the database
         if (result['tracks']['items']):
-            #print result
+            # print result
             print("--- Found Result in Spotify Database ----")
-            #print("{}".format(result['tracks']['items']))
+            # print("{}".format(result['tracks']['items']))
 
-            #get track and artist name
+            # get track and artist name
             trackName = result['tracks']['items'][0]['name']
             artistName = result['tracks']['items'][0]['artists'][0]['name']
 
             print("Track Name: {}\nArtist Name: {}".format(trackName, artistName))
 
-            #check to see if song is explicit
+            # check to see if song is explicit
             explicit = checkLyrics(trackName, artistName)
 
-            #song is not explicit, add to playlist
+            # song is not explicit, add to playlist
             if explicit == False:
                 # must be list due to bug in Spotipy library even if only searching for one song
                 track_id = []
@@ -78,30 +78,32 @@ def addSong(search):
 
                 # add item to playlist
                 results = sp.user_playlist_add_tracks(username, playlist_id, track_id)
-                if (results):
+                if results:
                     print("\n{} added successfully".format(track_id[0]))
                     track_id.pop()
+                    results.clear()
                 else:
                     print("\n{} was not added".format(track_id[0]))
                     track_id.pop()
+                    results.clear()
 
-            #explicit == true
-            #add explicit song to explicit list
+            # explicit == true
+            # add explicit song to explicit list
             else:
                 file = open("Explicit.txt", 'a')
-                file.write("---Song---\n\tTitle: {}\n\tArtist: {}")
+                file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(trackName, artistName))
                 file.close()
                 print("Explicit Song requested {} by {}".format(trackName, artistName))
 
             # clear
             result.clear()
-            results.clear()
 
     else:
         print("Can't get token for", username)
 
-#will parse tweet to get into proper format for search
-#will return string to search
+
+# will parse tweet to get into proper format for search
+# will return string to search
 def tweetParse(tweetText):
     search = re.sub('#[\w]+', '', tweetText)
     search = search.strip()
@@ -109,6 +111,7 @@ def tweetParse(tweetText):
     output.write("{}\n".format(search))
     output.close()
     return search
+
 
 #### Authenticate to Spotify ####
 getAuthInfo()
@@ -196,7 +199,7 @@ while (True):
         search = tweetParse(tweet.text)
 
         # drop everything after the hastag "#...."
-        #search = search.split("#", 1)[0]
+        # search = search.split("#", 1)[0]
 
         # make Spotify request
         print("Making Spotify Request for: \"{}\"".format(search))
