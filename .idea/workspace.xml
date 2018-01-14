@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e942d9bc-627d-4034-9565-9b4273231355" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LyricsCheck.py" afterPath="$PROJECT_DIR$/LyricsCheck.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Searches.txt" afterPath="$PROJECT_DIR$/Searches.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +20,8 @@
       <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="164">
+              <caret line="97" column="17" lean-forward="false" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="17" />
               <folding>
                 <element signature="e#741#755#0" expanded="true" />
               </folding>
@@ -33,9 +32,11 @@
       <file leaf-file-name="LyricsCheck.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/LyricsCheck.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="307">
+              <caret line="89" column="20" lean-forward="false" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+              <folding>
+                <element signature="e#222#236#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,12 +82,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>open</find>
       <find>'</find>
       <find>util</find>
       <find>oauth</find>
       <find>playlist_id</find>
       <find>#</find>
+      <find>open</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,8 +100,8 @@
         <option value="$PROJECT_DIR$/authentication.txt" />
         <option value="$PROJECT_DIR$/Searches.txt" />
         <option value="$PROJECT_DIR$/Server.py" />
-        <option value="$PROJECT_DIR$/LyricsCheck.py" />
         <option value="$PROJECT_DIR$/Tweets.txt" />
+        <option value="$PROJECT_DIR$/LyricsCheck.py" />
       </list>
     </option>
   </component>
@@ -359,14 +360,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Searches.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/getPlaylistID.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
@@ -374,14 +367,6 @@
           <folding>
             <element signature="e#209#223#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/authentication.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -401,10 +386,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/authentication.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Searches.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="164">
+          <caret line="97" column="17" lean-forward="false" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="17" />
           <folding>
             <element signature="e#741#755#0" expanded="true" />
           </folding>
@@ -413,9 +414,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LyricsCheck.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="307">
+          <caret line="89" column="20" lean-forward="false" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+          <folding>
+            <element signature="e#222#236#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
