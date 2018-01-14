@@ -22,6 +22,7 @@ import tweepy
 from tweepy import OAuthHandler
 import time
 import re
+from LyricsCheck import *
 
 # variable to check if first run
 first = True
@@ -55,8 +56,18 @@ def addSong(search):
 
         # if a result was found in the database
         if (result['tracks']['items']):
+            #print result
             print("--- Found Result in Spotify Database ----")
-            print("{}".format(result['tracks']['items']))
+            #print("{}".format(result['tracks']['items']))
+
+            #get track and artist name
+            trackName = result['tracks']['items'][0]['name']
+            artistName = result['tracks']['items'][0]['artists'][0]['name']
+
+            print("Track Name: {}\nArtist Name: {}".format(trackName, artistName))
+
+            #check to see if song is explicit
+            explicit = checkLyrics(trackName, artistName)
 
             # must be list due to bug in Spotipy library even if only searching for one song
             track_id = []
