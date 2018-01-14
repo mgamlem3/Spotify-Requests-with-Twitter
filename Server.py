@@ -69,19 +69,29 @@ def addSong(search):
             #check to see if song is explicit
             explicit = checkLyrics(trackName, artistName)
 
-            # must be list due to bug in Spotipy library even if only searching for one song
-            track_id = []
-            # append track uri to list
-            track_id.append(result['tracks']['items'][0]['uri'])
+            #song is not explicit, add to playlist
+            if explicit == False:
+                # must be list due to bug in Spotipy library even if only searching for one song
+                track_id = []
+                # append track uri to list
+                track_id.append(result['tracks']['items'][0]['uri'])
 
-            # add item to playlist
-            results = sp.user_playlist_add_tracks(username, playlist_id, track_id)
-            if (results):
-                print("\n{} added successfully".format(track_id[0]))
-                track_id.pop()
+                # add item to playlist
+                results = sp.user_playlist_add_tracks(username, playlist_id, track_id)
+                if (results):
+                    print("\n{} added successfully".format(track_id[0]))
+                    track_id.pop()
+                else:
+                    print("\n{} was not added".format(track_id[0]))
+                    track_id.pop()
+
+            #explicit == true
+            #add explicit song to explicit list
             else:
-                print("\n{} was not added".format(track_id[0]))
-                track_id.pop()
+                file = open("Explicit.txt", 'a')
+                file.write("---Song---\n\tTitle: {}\n\tArtist: {}")
+                file.close()
+                print("Explicit Song requested {} by {}".format(trackName, artistName))
 
             # clear
             result.clear()

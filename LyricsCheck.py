@@ -50,7 +50,8 @@ def parseResponse(artist, track, response):
     # if response is empty, add song to list that needs to be checked by human
     if response == "":
         file = open("SongsWithNoResponse.txt", 'a')
-        file.write("---Song---\tTitle: {}\n\tArtist: {}".format(track, artist))
+        file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(track, artist))
+        file.close()
         return "not found"
 
     #search for explicit flag in response
@@ -71,7 +72,8 @@ def parseResponse(artist, track, response):
         #regular expression was not matched
         else:
             file = open("SongsWithNoResponse.txt", 'a')
-            file.write("---Song---\tTitle: {}\n\tArtist: {}".format(track, artist))
+            file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(track, artist))
+            file.close()
             return "not found"
 
 
@@ -80,7 +82,7 @@ def parseResponse(artist, track, response):
 def checkLyrics(track, artist):
     URL = makeURL(track, artist)
     response = makeHTTPRequest(URL)
-    explicit = parseResponse(artist, track, response)
+    explicit = parseResponse(artist, track, str(response))
     if explicit == "true":
         return True
     elif explicit == "false":
