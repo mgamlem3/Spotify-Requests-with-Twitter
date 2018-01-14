@@ -20,11 +20,23 @@ def makeURL(track, artist):
     URL = URL + artist + "-" + track + "-lyrics"
 
     #connect to URL
-    http = urllib3.PoolManager()
-    print("Requesting URL: {}".format(URL))
-    response = http.request("GET", URL)
+    try:
+        http = urllib3.PoolManager()
+        print("Requesting URL: {}".format(URL))
+        response = http.request("GET", URL)
 
-    return response.data
+        #check for 200 response
+        if(response.status == 200):
+            return response.data
+
+        #raise exception
+        else:
+            raise Exception("Response other than 200 returned.\nReceived Response code: {}".format(response.status))
+
+    except Exception as e:
+        print(e)
+
+    return "Exception Occurred"
 
 def getLyrics(URL):
     return 0
