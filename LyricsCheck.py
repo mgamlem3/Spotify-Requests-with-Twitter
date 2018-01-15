@@ -1,9 +1,9 @@
 # coding=utf-8
-# //  File Name:  LyricsCheck
-# //  Project Name:  Spotify-Requests-with-Twitter
-# //
-# //  Created by Michael Gamlem III on January 13, 2018
-# //  Copyright © 2018 Michael Gamlem III. All rights reserved.
+# File Name:  LyricsCheck
+# Project Name:  Spotify-Requests-with-Twitter
+#
+# Created by Michael Gamlem III on January 13, 2018
+# Copyright © 2018 Michael Gamlem III. All rights reserved.
 
 import urllib3
 import re

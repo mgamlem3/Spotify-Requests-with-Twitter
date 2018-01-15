@@ -23,6 +23,7 @@ from tweepy import OAuthHandler
 import time
 import re
 from LyricsCheck import *
+from SendTweet import *
 
 # variable to check if first run
 first = True
@@ -46,7 +47,7 @@ def getAuthInfo():
 
 # Will add songs to Spotify Playlist
 # must pass in a search string
-def addSong(search):
+def addSong(search, tweetUsername):
     if token:
         # authorize with Spotify
         sp = spotipy.Spotify(auth=token)
@@ -82,6 +83,7 @@ def addSong(search):
                     print("\n{} added successfully".format(track_id[0]))
                     track_id.pop()
                     results.clear()
+                    tweetSuccess(tweetID, tweetUsername, trackName, artistName, API)
                 else:
                     print("\n{} was not added".format(track_id[0]))
                     track_id.pop()
@@ -94,6 +96,7 @@ def addSong(search):
                 file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(trackName, artistName))
                 file.close()
                 print("Explicit Song requested {} by {}".format(trackName, artistName))
+                tweetExplicit(tweetID, tweetUsername, trackName, artistName, API)
 
             # clear
             result.clear()
@@ -182,6 +185,7 @@ while (True):
         print("\tTweet Found:")
         print("{} {} {} {} {}".format(tweet.created_at, tweet.text, tweet.lang, tweet.id, tweet.author.screen_name))
         tweetID = str(tweet.id)
+        tweetUsername = str(tweet.author.screen_name)
 
         # check to see if Tweet has already been found
         filein = open("Tweets.txt")
@@ -204,7 +208,7 @@ while (True):
         # make Spotify request
         print("Making Spotify Request for: \"{}\"".format(search))
         if (search != ""):
-            addSong(search)
+            addSong(search, tweetUsername)
 
     # not first run anymore
     first = False
