@@ -28,7 +28,7 @@ def makeHTTPRequest(URL):
     # connect to URL
     try:
         http = urllib3.PoolManager()
-        print("Requesting URL: {}".format(URL))
+        print("\tRequesting URL: {}".format(URL))
         response = http.request("GET", URL)
 
         # check for 200 response

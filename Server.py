@@ -58,14 +58,14 @@ def addSong(search, tweetUsername):
         # if a result was found in the database
         if (result['tracks']['items']):
             # print result
-            print("--- Found Result in Spotify Database ----")
+            print("\tFound Result in Spotify Database: ")
             # print("{}".format(result['tracks']['items']))
 
             # get track and artist name
             trackName = result['tracks']['items'][0]['name']
             artistName = result['tracks']['items'][0]['artists'][0]['name']
 
-            print("Track Name: {}\nArtist Name: {}".format(trackName, artistName))
+            print("\tTrack Name: {}\n\tArtist Name: {}".format(trackName, artistName))
 
             # check to see if song is explicit
             explicit = checkLyrics(trackName, artistName)
@@ -80,12 +80,12 @@ def addSong(search, tweetUsername):
                 # add item to playlist
                 results = sp.user_playlist_add_tracks(username, playlist_id, track_id)
                 if results:
-                    print("\n{} added successfully".format(track_id[0]))
+                    print("\n\t{} added successfully".format(track_id[0]))
                     track_id.pop()
                     results.clear()
                     tweetSuccess(tweetID, tweetUsername, trackName, artistName, API)
                 else:
-                    print("\n{} was not added".format(track_id[0]))
+                    print("\n\t{} was not added".format(track_id[0]))
                     track_id.pop()
                     results.clear()
 
@@ -163,7 +163,7 @@ while (True):
     try:
         print("Making Twitter Request...\n")
         RESULTS = tweepy.Cursor(API.search, q=HASHTAG, show_user='true', since_id='0').items(10)
-        print(RESULTS)
+        #print(RESULTS)
 
     # if 429 error, wait 15 minutes until we can request again
     except tweepy.error.TweepError:
@@ -182,14 +182,15 @@ while (True):
     # if a tweet is found pass to Spotify
     for tweet in RESULTS:
         # display tweet
-        print("\tTweet Found:")
-        print("{} {} {} {} {}".format(tweet.created_at, tweet.text, tweet.lang, tweet.id, tweet.author.screen_name))
+        print("Tweet Found:")
+        print("\t{} {} {} {} {}".format(tweet.created_at, tweet.text, tweet.lang, tweet.id, tweet.author.screen_name))
         tweetID = str(tweet.id)
         tweetUsername = str(tweet.author.screen_name)
 
         # check to see if Tweet has already been found
         filein = open("Tweets.txt")
         if tweetID in filein.read().split():
+            print("\tTweet already found")
             continue
         filein.close()
 
@@ -206,7 +207,7 @@ while (True):
         # search = search.split("#", 1)[0]
 
         # make Spotify request
-        print("Making Spotify Request for: \"{}\"".format(search))
+        print("\nMaking Spotify Request for: \"{}\"".format(search))
         if (search != ""):
             addSong(search, tweetUsername)
 
