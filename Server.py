@@ -24,6 +24,7 @@ import time
 import re
 from LyricsCheck import *
 from SendTweet import *
+from Database import *
 
 # variable to check if first run
 first = True
@@ -83,7 +84,7 @@ def addSong(search, tweetUsername):
                     print("\n\t{} added successfully".format(track_id[0]))
                     track_id.pop()
                     results.clear()
-                    tweetSuccess(tweetID, tweetUsername, trackName, artistName, API)
+                    #tweetSuccess(tweetID, tweetUsername, trackName, artistName, API)
                 else:
                     print("\n\t{} was not added".format(track_id[0]))
                     track_id.pop()
@@ -96,7 +97,7 @@ def addSong(search, tweetUsername):
                 file.write("---Song---\n\tTitle: {}\n\tArtist: {}".format(trackName, artistName))
                 file.close()
                 print("Explicit Song requested {} by {}".format(trackName, artistName))
-                tweetExplicit(tweetID, tweetUsername, trackName, artistName, API)
+                #tweetExplicit(tweetID, tweetUsername, trackName, artistName, API)
 
             # clear
             result.clear()
