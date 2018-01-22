@@ -21,7 +21,6 @@ import spotipy.util as util
 import tweepy
 from tweepy import OAuthHandler
 import time
-import re
 from LyricsCheck import *
 from SendTweet import *
 from Database import *
@@ -33,7 +32,6 @@ authInfo = [None] * 9
 # hashtag to search for
 HASHTAG = "#WhitworthSpringNShout"
 
-
 # will get secret information from file
 # will store in an array to be accessed that variables will be set from
 def getAuthInfo():
@@ -44,7 +42,6 @@ def getAuthInfo():
         authInfo[i] = str(line[2])
         i = i + 1
     info.close()
-
 
 # Will add songs to Spotify Playlist
 # must pass in a search string
@@ -185,6 +182,7 @@ while (True):
         # display tweet
         print("Tweet Found:")
         print("\t{} {} {} {} {}".format(tweet.created_at, tweet.text, tweet.lang, tweet.id, tweet.author.screen_name))
+        insertTweet(tweet.id, tweet.author.screen_name, tweet.created_at, tweet.text)
         tweetID = str(tweet.id)
         tweetUsername = str(tweet.author.screen_name)
 
